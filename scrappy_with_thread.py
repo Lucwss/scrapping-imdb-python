@@ -1,23 +1,23 @@
-import asyncio
-import csv
-
-import aiohttp
-from bs4 import BeautifulSoup
+import concurrent.futures
+import random
 
 from logs import logger
+import requests
+import csv
+from bs4 import BeautifulSoup
+import time
 
 popular_movies_url = 'https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm'
-background_tasks = []
+MAX_THREADS = 10
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
 
-async def extract_movie_details(movie_link: str, session):
-    await asyncio.sleep(0.2)
+def extract_movie_details(movie_link: str):
+    time.sleep(random.uniform(0, 0.2))
 
-    async with session.get(movie_link, headers=headers) as response:
-        content = await response.text()
+    content = requests.get(url=movie_link, headers=headers).content
 
     data_soup = BeautifulSoup(content, 'html.parser')
 
@@ -51,19 +51,16 @@ async def extract_movie_details(movie_link: str, session):
                 movie_writer.writerow([title, date, rating, plot])
 
 
-async def extract_movies(movie_links: list):
-    connector = aiohttp.TCPConnector(limit=50)
-    async with aiohttp.ClientSession(connector=connector) as session:
-        tasks = [extract_movie_details(link, session) for link in movie_links]
-        await asyncio.gather(*tasks)
+def extract_movies(movie_links: list):
+    threads = min(MAX_THREADS, len(movie_links))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=threads) as pool:
+        pool.map(extract_movie_details, movie_links)
 
 
-async def main():
-    start_time = asyncio.get_event_loop().time()
+def main():
+    start_time = time.time()
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(popular_movies_url, headers=headers) as response:
-            content = await response.text()
+    content = requests.get(url=popular_movies_url, headers=headers).content
 
     soup = BeautifulSoup(content, 'html.parser')
 
@@ -75,12 +72,12 @@ async def main():
 
     movie_links = ["https://imdb.com" + movie.find('a')['href'] for movie in movie_items]
 
-    await extract_movies(movie_links)
+    extract_movies(movie_links)
 
-    end_time = asyncio.get_event_loop().time()
+    end_time = time.time()
 
     logger.info(f" tempo de espera aproximado: {end_time - start_time}")
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    main()
