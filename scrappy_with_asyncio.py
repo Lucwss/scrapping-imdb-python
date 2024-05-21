@@ -54,7 +54,6 @@ async def extract_movies(movie_links: list):
         tasks = [extract_movie_details(link, session) for link in movie_links]
         await asyncio.gather(*tasks)
 
-
 async def main():
     start_time = asyncio.get_event_loop().time()
 
