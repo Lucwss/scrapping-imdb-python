@@ -1,15 +1,0 @@
-
-Hpython:S1066”"/Merge this if statement with the enclosing one.(ºä÷Â
-7python:S125”"Remove this commented out code.(Ç‚®…
-jpython:S107Î"MMethod "__init__" has 26 parameters, which is greater than the 13 authorized.( Ðàþüÿÿÿÿ
-rpython:S3776Í"TRefactor this function to reduce its Cognitive Complexity from 30 to the 15 allowed.(ú„Úüùÿÿÿÿ
-`python:S5799ô"GMerge these implicitly concatenated strings; or did you forget a comma?(Åù­¹
-epython:S5799ü"GMerge these implicitly concatenated strings; or did you forget a comma?( ²ø›øÿÿÿÿ
-jpython:S107ƒ"MMethod "_request" has 30 parameters, which is greater than the 13 authorized.( Ðàþüÿÿÿÿ
-spython:S3776‚"URefactor this function to reduce its Cognitive Complexity from 108 to the 15 allowed.(Šäá˜ýÿÿÿÿ
-Apython:S108´")Either remove or fill this block of code.(ã‘Û¾
-lpython:S107×"OMethod "ws_connect" has 21 parameters, which is greater than the 13 authorized.( Ðàþüÿÿÿÿ
-mpython:S107‹"PMethod "_ws_connect" has 21 parameters, which is greater than the 13 authorized.( Ðàþüÿÿÿÿ
-rpython:S3776Š"TRefactor this function to reduce its Cognitive Complexity from 27 to the 15 allowed.(³´’‘þÿÿÿÿ
-`python:S5799¯"GMerge these implicitly concatenated strings; or did you forget a comma?(ÝÈÊ£
-kpython:S107ñ	"NFunction "request" has 25 parameters, which is greater than the 13 authorized.(œó ÷ýÿÿÿÿ
